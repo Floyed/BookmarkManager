@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
@@ -19,11 +20,9 @@ public class Folder extends StateBased {
     private String name;
 
     @Getter @Setter
-    private String path;
-
-    @Getter @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "folder")
     private List<Bookmark> bookmarkList;
 
-
+    @Getter @Setter @OneToOne
+    private Folder parentFolder;
 }

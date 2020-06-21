@@ -15,9 +15,6 @@ public class Bookmark extends StateBased {
     private String url;
 
     @Getter @Setter
-    private String path;
-
-    @Getter @Setter
     private String name;
 
     @OneToOne @Getter @Setter

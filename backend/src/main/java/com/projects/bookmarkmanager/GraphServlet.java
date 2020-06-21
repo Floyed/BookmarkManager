@@ -1,6 +1,8 @@
 package com.projects.bookmarkmanager;
 
 import com.projects.bookmarkmanager.bookmark.BookmarkResolver;
+import com.projects.bookmarkmanager.folder.FolderResolver;
+import com.projects.bookmarkmanager.graphql.Mutation;
 import com.projects.bookmarkmanager.graphql.Query;
 import com.projects.bookmarkmanager.repository.MetaRepository;
 import graphql.kickstart.execution.GraphQLObjectMapper;
@@ -43,7 +45,9 @@ public class GraphServlet extends GraphQLHttpServlet {
                 .file("schema.graphqls")
                 .resolvers(
                         new Query(metaRepository),
-                        new BookmarkResolver(metaRepository)
+                        new Mutation(metaRepository),
+                        new BookmarkResolver(metaRepository),
+                        new FolderResolver(metaRepository)
                 ).build();
 
         return schemaParser.makeExecutableSchema();
