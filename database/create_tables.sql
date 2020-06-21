@@ -1,6 +1,5 @@
 SET search_path = "bookmarkmanagement";
 
-
 insert into folder (id,status,name,path)
 values(1,'ACTIVE','root','/');
 

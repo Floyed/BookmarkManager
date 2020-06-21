@@ -1,0 +1,6 @@
+.DS_Store
+backend/target
+backend/src/main/resources/static
+.idea/
+frontend/build
+#backend/src/main/resources/application.yml
