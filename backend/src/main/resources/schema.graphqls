@@ -6,16 +6,13 @@ schema {
 type Query {
     getAllBookMarks: [Bookmark]!
     getAllFolders: [Folder]!
-#    getRootStructure: Root
-#    getCompleteFileStructure: [FolderWithBookmarks]!
+
     getRootFolders: [Folder]!
     getRootBookmarks : [Bookmark]!
-}
 
-#type Root {
-#    getRootFolders: [Folder]!
-#    getRootBookmarks : [Bookmark]!
-#}
+    getFoldersInFolder(folderId : ID!) : [Folder]
+    getBookmarksInFolder(folderId : ID!) : [Bookmark]
+}
 
 type Bookmark {
     id:ID
@@ -26,31 +23,12 @@ type Bookmark {
 }
 
 type Mutation {
-#    createFolder(folderInput : NewFolderInput!) : Folder!
     createFolder(name : String!, parentFolderId : ID) : Folder!
     createBookmark(name : String, folderId : ID, url : String!) : Bookmark!
-#    createBookMark()
 }
-
-input NewFolderInput {
-#    id : ID
-    name : String!
-    parentFolderId : ID
-}
-
-#input ParentFolderInput {
-#    id : ID!
-#    name : String!
-#    parentFolder : ParentFolderInput
-#}
 
 type Folder {
     name : String!
     parentFolder : Folder
     bookmarkList : [Bookmark]!
 }
-
-#type FolderWithBookmarks {
-#    name : String!
-#    parentFolder : FolderWithBookmarks
-#}

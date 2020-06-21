@@ -23,12 +23,12 @@ public class FolderResolver implements GraphQLQueryResolver, GraphQLMutationReso
         return metaRepository.getFolderRepository().findAll();
     }
 
-//    public Iterable<Folder> getCompleteFileStructure(){
-//        return this.metaRepository.getFolderRepository().findAll();
-//    }
-
     public Iterable<Folder> getRootFolders() {
         return this.metaRepository.getFolderRepository().getRootFolders();
+    }
+
+    public Iterable<Folder> getFoldersInFolder(Integer folderId) {
+        return this.metaRepository.getFolderRepository().getFoldersInFolder(folderId);
     }
 
     public Folder createFolder(String name, @Nullable Integer parentFolderId){

@@ -12,4 +12,7 @@ public interface BookmarkRepository extends CrudRepository<Bookmark, Integer> {
 
     @Query("select bookmark from Bookmark bookmark where bookmark.folder = NULL")
     public List<Bookmark> getRootBookmarks();
+
+    @Query("select bookmark from Bookmark bookmark where bookmark.folder.id = :folderId")
+    public List<Bookmark> getBookmarksInFolder(@Param("folderId") Integer folderId);
 }

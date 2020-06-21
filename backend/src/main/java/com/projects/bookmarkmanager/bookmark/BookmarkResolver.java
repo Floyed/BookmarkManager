@@ -28,6 +28,10 @@ public class BookmarkResolver implements GraphQLQueryResolver, GraphQLMutationRe
         return this.metaRepository.getBookmarkRepository().getRootBookmarks();
     }
 
+    public Iterable<Bookmark> getBookmarksInFolder(Integer folderId) {
+        return this.metaRepository.getBookmarkRepository().getBookmarksInFolder(folderId);
+    }
+
     public Bookmark createBookmark(@Nullable String name, @Nullable Integer folderId, String url){
 
         Bookmark bookmark = new Bookmark();
