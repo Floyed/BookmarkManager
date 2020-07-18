@@ -28,6 +28,8 @@ type Mutation {
 }
 
 type Folder {
+    id: ID!
+    status: String
     name : String!
     parentFolder : Folder
     bookmarkList : [Bookmark]!
