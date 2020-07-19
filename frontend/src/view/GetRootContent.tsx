@@ -1,61 +1,53 @@
-import { gql } from "apollo-boost";
-import { Query, useQuery } from "react-apollo";
 import React from "react";
-import Folder from "../model/Folder";
 import Bookmark from "../model/Bookmark";
+import { makeStyles } from '@material-ui/core/styles';
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import { GetRootContentMutation } from "../qraphql/queries/GetRootContentQuery";
-
-const GET_ROOT_CONTENT = gql`
-  query getRootContent {
-    getRootFolders {
-      id
-      name
-    }
-    getRootBookmarks {
-      id
-      name
-      url
-    }
-  }
-`;
-
-interface Data {
-  getRootFolders: Array<{
-    id: string;
-    name: string;
-  }>;
-  getRootBookmarks: Array<{
-    id: string;
-    name: string;
-    url: string;
-  }>;
-}
+import FolderInfo from "../model/FolderInfo";
+import { handleLoadingAndErrors } from "../qraphql/queries/HandleLoadingAndErrors";
 
 
-export function GetRootContent() : React.ReactElement{
+const useStyles = makeStyles({
+  root: {
+    height: 240,
+    flexGrow: 1,
+    maxWidth: 400,
+  },
+});
+
+export function GetRootContent(): React.ReactElement {
+
+  const classes = useStyles();
 
   return (
-      <GetRootContentMutation>
-        {
-          ({loading, error, data}) => {
-            
-            if(data === undefined){
-              return (<div>abc</div>);
-            }
-            console.log(data);
-            
-            let bookmarks = data.getRootBookmarks.map(
-            b => (<Bookmark id = {b.id} name = {b.name} url = {b.url} status = {b.status}></Bookmark>)
-            );
 
-            data.getRootFolders.map(
-              f => (bookmarks.push(<Folder id = {f.id} name = {f.name} status = {f.status}></Folder>))
-            )
-            
-            return (<div>{bookmarks}</div>);
-        }
-      }
-      </GetRootContentMutation>
+    <React.Fragment>
+      <TreeView className={classes.root} defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
+        <GetRootContentMutation>
+          {
+            ({ loading, error, data }) => {
+
+              if (data === undefined || error || loading) {
+                return handleLoadingAndErrors(loading, error, data);
+              }
+
+              let contents = data.getRootFolders.map(
+                f => (<FolderInfo key={f.id} {...f}  />)
+              );
+
+              data.getRootBookmarks.map(
+                b => (contents.push(<Bookmark key={b.id} {...b} />))
+              );
+
+              return (<div>{contents}</div>);
+            }
+          }
+        </GetRootContentMutation>
+      </TreeView>
+    </React.Fragment>
+
   );
 }

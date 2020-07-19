@@ -9,7 +9,6 @@ query getRootContent {
   getRootFolders {
     id
     name
-    status
     parentFolder {
       id
     }
@@ -43,9 +42,7 @@ interface Data {
   interface Variables {
     }
   
-  export function GetRootContentMutation(
-    props : { children : (result: QueryResult<Data, Variables>) => JSX.Element | null }
-    ) : React.ReactElement{
+  export function GetRootContentMutation( props : { children : (result: QueryResult<Data, Variables>) => JSX.Element | null }) : React.ReactElement{
 
     return (
       <Query<Data, Variables> query={GET_ROOT_CONTENT}>
